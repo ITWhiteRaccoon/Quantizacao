@@ -57,7 +57,6 @@ namespace Quantizacao
                 {Frequency = color.Frequency, R = color.R, G = color.G, B = color.B}).ToList();
 
             mostFrequent = mostFrequent.OrderByDescending(i => i).ToList();
-            //var mappings = new Dictionary<Color, Color>();
             var baseI = 0;
             while (mostFrequent.Count > nOfColors)
             {
@@ -80,12 +79,6 @@ namespace Quantizacao
                     }
                 }
 
-                /*mappings[Color.FromArgb(closestColor.R, closestColor.G, closestColor.B)] =
-                    Color.FromArgb(baseColor.R, baseColor.G, baseColor.B);
-                ColorMap oldColor = colorChart[Color.FromArgb(closestColor.R, closestColor.G, closestColor.B)];
-                oldColor.R = baseColor.R;
-                oldColor.G = baseColor.G;
-                oldColor.B = baseColor.B;*/
                 mostFrequent.Remove(closestColor);
                 baseI++;
             }
