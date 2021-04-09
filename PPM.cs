@@ -24,12 +24,12 @@ namespace Quantizacao
 
             public double RelDistance(ColorMap other)
             {
-                return Math.Pow(other.R - R, 2) + Math.Pow(other.G - G, 2) + Math.Pow(other.B - B, 2);
+                return ((other.R - R) << 2) + ((other.G - G) << 2) + ((other.B - B) << 2);
             }
 
             public double RelDistance(Color other)
             {
-                return Math.Pow(other.R - R, 2) + Math.Pow(other.G - G, 2) + Math.Pow(other.B - B, 2);
+                return ((other.R - R) << 2) + ((other.G - G) << 2) + ((other.B - B) << 2);
             }
         }
 
@@ -66,17 +66,17 @@ namespace Quantizacao
                     baseI = 0;
                 }
 
-                ColorMap baseColor = mostFrequent.ElementAt(baseI);
-                ColorMap closestColor = mostFrequent.ElementAt(baseI + 1);
+                ColorMap baseColor = mostFrequent[baseI];
+                ColorMap closestColor = mostFrequent[baseI + 1];
                 double colorDistance = baseColor.RelDistance(closestColor);
 
                 for (int i = baseI + 2; i < mostFrequent.Count; i++)
                 {
                     double newDistance;
-                    if ((newDistance = baseColor.RelDistance(mostFrequent.ElementAt(i))) < colorDistance)
+                    if ((newDistance = baseColor.RelDistance(mostFrequent[i])) < colorDistance)
                     {
                         colorDistance = newDistance;
-                        closestColor = mostFrequent.ElementAt(i);
+                        closestColor = mostFrequent[i];
                     }
                 }
 
