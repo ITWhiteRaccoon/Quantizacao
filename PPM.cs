@@ -24,12 +24,12 @@ namespace Quantizacao
 
             public double RelDistance(ColorMap other)
             {
-                return ((other.R - R) << 2) + ((other.G - G) << 2) + ((other.B - B) << 2);
+                return (other.R - R) * (other.R - R) + (other.G - G) * (other.G - G) + (other.B - B) * (other.B - B);
             }
 
             public double RelDistance(Color other)
             {
-                return ((other.R - R) << 2) + ((other.G - G) << 2) + ((other.B - B) << 2);
+                return (other.R - R) * (other.R - R) + (other.G - G) * (other.G - G) + (other.B - B) * (other.B - B);
             }
         }
 

@@ -8,9 +8,9 @@ namespace Quantizacao
     {
         static void Main(string[] args)
         {
-            Bitmap bitmap = PPM.ReadToBitmap("C:/Users/Eduardo/Desktop/PedraFurada.ppm");
+            Bitmap bitmap = PPM.ReadToBitmap("C:/Users/Eduardo/Desktop/Colegio.ppm");
             bitmap = PPM.Quantize(bitmap, 50);
-            PPM.WriteFromBitmap("C:/Users/Eduardo/Desktop/PedraFuradaRes.ppm", bitmap);
+            PPM.WriteFromBitmap("C:/Users/Eduardo/Desktop/ColegioRes.ppm", bitmap);
         }
     }
 }
