@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -36,9 +35,9 @@ namespace Quantizacao
         public static Bitmap Quantize(Bitmap bitmap, int nOfColors)
         {
             var colorChart = new Dictionary<Color, ColorMap>();
-            for (var y = 0; y < bitmap.Height; y++)
+            for (int y = 0; y < bitmap.Height; y++)
             {
-                for (var x = 0; x < bitmap.Width; x++)
+                for (int x = 0; x < bitmap.Width; x++)
                 {
                     Color pixel = bitmap.GetPixel(x, y);
                     if (colorChart.ContainsKey(pixel))
@@ -57,7 +56,7 @@ namespace Quantizacao
                 {Frequency = color.Frequency, R = color.R, G = color.G, B = color.B}).ToList();
 
             mostFrequent = mostFrequent.OrderByDescending(i => i).ToList();
-            var baseI = 0;
+            int baseI = 0;
             while (mostFrequent.Count > nOfColors)
             {
                 if (baseI >= mostFrequent.Count - 2)
@@ -83,26 +82,26 @@ namespace Quantizacao
                 baseI++;
             }
 
-            for (var y = 0; y < bitmap.Height; y++)
+            for (int y = 0; y < bitmap.Height; y++)
             {
-                for (var x = 0; x < bitmap.Width; x++)
+                for (int x = 0; x < bitmap.Width; x++)
                 {
-                    Color pixelAtual = bitmap.GetPixel(x, y);
-                    var isListed = false;
+                    Color currentPixel = bitmap.GetPixel(x, y);
+                    bool isListed = false;
                     ColorMap closest = mostFrequent[0];
-                    double closestDistance = closest.RelDistance(pixelAtual);
+                    double closestDistance = closest.RelDistance(currentPixel);
                     foreach (ColorMap color in mostFrequent)
                     {
-                        if (pixelAtual.R == color.R &&
-                            pixelAtual.G == color.G &&
-                            pixelAtual.B == color.B)
+                        if (currentPixel.R == color.R &&
+                            currentPixel.G == color.G &&
+                            currentPixel.B == color.B)
                         {
                             isListed = true;
                             break;
                         }
 
                         double newDistance;
-                        if ((newDistance = color.RelDistance(pixelAtual)) < closestDistance)
+                        if ((newDistance = color.RelDistance(currentPixel)) < closestDistance)
                         {
                             closest = color;
                             closestDistance = newDistance;
@@ -175,7 +174,7 @@ namespace Quantizacao
                 }
             }
 
-            var y = 0;
+            int y = 0;
             bitmap = new Bitmap(width, height);
             while ((line = reader.ReadLine()) != null && (line = line.Trim()).Length >= 0 && line[0] != '#')
             {
@@ -184,7 +183,7 @@ namespace Quantizacao
                 if (colors.Length != width * 3) { return null; }
 
 
-                for (var x = 0; x < colors.Length / 3; x++)
+                for (int x = 0; x < colors.Length / 3; x++)
                 {
                     bitmap.SetPixel(x, y, Color.FromArgb(
                         Convert.ToInt32(colors[x * 3]),
@@ -206,11 +205,11 @@ namespace Quantizacao
             writer.WriteLine("P3");
             writer.WriteLine($"{bitmap.Width} {bitmap.Height}");
             writer.WriteLine("255");
-            for (var y = 0;
+            for (int y = 0;
                 y < bitmap.Height;
                 y++)
             {
-                for (var x = 0; x < bitmap.Width; x++)
+                for (int x = 0; x < bitmap.Width; x++)
                 {
                     Color color = bitmap.GetPixel(x, y);
                     writer.Write($" {color.R} {color.G} {color.B}");

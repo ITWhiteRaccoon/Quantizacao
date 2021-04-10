@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 
 namespace Quantizacao
@@ -8,9 +7,17 @@ namespace Quantizacao
     {
         static void Main(string[] args)
         {
-            Bitmap bitmap = PPM.ReadToBitmap("C:/Users/Eduardo/Desktop/Colegio.ppm");
-            bitmap = PPM.Quantize(bitmap, 50);
-            PPM.WriteFromBitmap("C:/Users/Eduardo/Desktop/ColegioRes.ppm", bitmap);
+            if (args.Length < 3)
+            {
+                Console.WriteLine("usage: quantize <inputImage> <outputImage> <numerOfColors>");
+            }
+
+            string inputImage = args[0].Trim(), outputImage = args[1].Trim();
+            int numberOfColors = Convert.ToInt32(args[2].Trim());
+
+            Bitmap bitmap = PPM.ReadToBitmap(inputImage);
+            bitmap = PPM.Quantize(bitmap, numberOfColors);
+            PPM.WriteFromBitmap(outputImage, bitmap);
         }
     }
 }
